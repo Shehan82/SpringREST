@@ -5,6 +5,8 @@ import com.example.springRest.SpringRestWithFirebase.Service.StudentFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -15,6 +17,11 @@ public class StudentController {
     @PostMapping("/addStudent")
     public StudentModel addStudent(@RequestBody StudentModel student){
         return studentFunctions.saveStudent(student);
+    }
+
+    @GetMapping("/getStudent/{id}")
+    public StudentModel getStudent(@PathVariable int id) throws ExecutionException, InterruptedException {
+        return studentFunctions.getStudent(id);
     }
 
 }
