@@ -5,6 +5,8 @@ import com.example.springRest.SpringRestWithFirebase.Service.StudentFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -22,6 +24,11 @@ public class StudentController {
     @GetMapping("/getStudent/{id}")
     public StudentModel getStudent(@PathVariable int id) throws ExecutionException, InterruptedException {
         return studentFunctions.getStudent(id);
+    }
+
+    @GetMapping("/getAllStudents")
+    public List<StudentModel> getAllStudents() throws ExecutionException, InterruptedException {
+        return studentFunctions.getAllStudents();
     }
 
 }

@@ -1,14 +1,12 @@
 package com.example.springRest.SpringRestWithFirebase.Service;
 
 import com.example.springRest.SpringRestWithFirebase.Model.StudentModel;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -26,6 +24,17 @@ public class StudentFunctions {
         studentModel = s.toObject(StudentModel.class);
 
         return studentModel;
+    }
 
+    public List<StudentModel> getAllStudents() throws ExecutionException, InterruptedException {
+        List<StudentModel> studentModelList = new ArrayList<StudentModel>();
+
+        List<QueryDocumentSnapshot> studentList = FirestoreClient.getFirestore().collection("student").get().get().getDocuments();
+
+        for(QueryDocumentSnapshot studentModel : studentList){
+            studentModelList.add(studentModel.toObject(StudentModel.class));
+        }
+
+        return studentModelList;
     }
 }
