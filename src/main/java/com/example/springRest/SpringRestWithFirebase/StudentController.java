@@ -31,4 +31,10 @@ public class StudentController {
         return studentFunctions.getAllStudents();
     }
 
+
+    @PutMapping("/updateStudent")
+    public StudentModel updateStudent(@RequestBody StudentModel student) throws ExecutionException, InterruptedException {
+       return studentFunctions.updateStudent(student);
+    }
+
 }

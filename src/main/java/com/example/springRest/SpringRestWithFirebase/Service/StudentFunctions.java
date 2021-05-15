@@ -1,9 +1,12 @@
 package com.example.springRest.SpringRestWithFirebase.Service;
 
 import com.example.springRest.SpringRestWithFirebase.Model.StudentModel;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +39,15 @@ public class StudentFunctions {
         }
 
         return studentModelList;
+    }
+
+
+    public StudentModel updateStudent(StudentModel student) throws ExecutionException, InterruptedException {
+
+        String documentID = FirestoreClient.getFirestore().collection("student").whereEqualTo("sID", student.getsID()).get().get().getDocuments().get(0).getId();
+
+        FirestoreClient.getFirestore().collection("student").document(documentID).set(student);
+
+        return student;
     }
 }
